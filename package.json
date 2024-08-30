@@ -2,10 +2,14 @@
   "name": "minewallet",
   "version": "1.0.0",
   "description": "Mine Wallet Project",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev" : "nodemon server/src/index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
