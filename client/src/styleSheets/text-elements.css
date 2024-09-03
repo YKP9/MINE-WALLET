@@ -1,0 +1,38 @@
+
+/* Text Sizes */
+
+.text-2xl{
+    font-size: 1.6rem !important;
+}
+.text-xl{
+    font-size: 1.3rem !important;
+}
+.text-lg{
+    font-size: 1.1rem !important;
+}
+.text-md{
+    font-size: 1rem !important;
+}
+.text-sm{
+    font-size: 0.875rem !important;
+}
+
+/* Text Alignments */
+
+.text-center{
+    text-align: center;
+}
+.text-start{
+    text-align: start;
+}
+.text-end{
+    text-align: right;
+}
+
+.underline{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.uppercase{
+    text-transform: uppercase;
+}

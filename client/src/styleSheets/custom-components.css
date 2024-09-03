@@ -1,0 +1,37 @@
+.card{
+    background-color: white;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.loader-parent{
+position: absolute;
+inset: 0;
+/* background-color: #1b1b1bf9; */
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1;
+}
+.loader{
+    height: 80px;
+    width: 80px;
+    border: 10px solid rgb(75, 152, 118);
+    border-radius: 10%;
+    border-top: 0px;
+    border-bottom: 0px;
+    animation: loader-anim 1s linear infinite;
+
+}
+
+@keyframes loader-anim {
+    0% {
+        transform : rotate(0deg)
+    }
+    100% {
+        transform : rotate(360deg)
+    }
+}
+
+table{
+    border : 1px solid rgb(182, 182, 182);
+}
