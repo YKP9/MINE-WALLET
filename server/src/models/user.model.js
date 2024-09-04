@@ -53,10 +53,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
     },
-    profilePicture: {
-        type: String,
-        required : true,
-    },
+    // profilePicture: {
+    //     type: String,
+    //     required : true,
+    // },
     balance: {
         type: Number,
         default: 0,
