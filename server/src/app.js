@@ -20,12 +20,13 @@ app.use(cookieParser());
 
 // Import Routes
 import userRouter from "./routes/user.routes.js";
+import errorHandler from "./middlewares/errorHandling.middleware.js";
 
 
 // Declare Routes
 app.use("/api/v1/users", userRouter);
 
-
+app.use(errorHandler)
 
 
 export {app} 

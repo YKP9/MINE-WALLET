@@ -16,7 +16,9 @@ export function Login() {
       }
 
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
+      const errorMessage = error.response?.data?.message || error.message;
+      message.error(errorMessage);
   
     }
   };
