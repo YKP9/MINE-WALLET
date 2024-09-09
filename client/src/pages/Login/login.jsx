@@ -1,16 +1,30 @@
 import { Form, Row, Col, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { LoginUser } from "../../apiCalls/users";
 
 export function Login() {
+  const Navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      const response = await LoginUser(values);
+      
+      if(response.success) {
+        message.success(response.message);
+        localStorage.setItem("token", response.data);
+      }else{
+        message.error(response.message);
+      }
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-    };
-    
-    return(
-        <div className="montserrat bg-primary flex justify-center item-center h-screen">
+    } catch (error) {
+      message.error(error.message);
+  
+    }
+  };
+
+  return (
+    <div className="montserrat bg-primary flex justify-center item-center h-screen">
       <div className="card w-400 p-2">
-        <Form layout="vertical" onFinish={onFinish} >
+        <Form layout="vertical" onFinish={onFinish}>
           <h1 className="text-2xl text-center"> MINEWALLET - LOGIN </h1>
 
           <hr />
@@ -38,5 +52,5 @@ export function Login() {
         </Form>
       </div>
     </div>
-    )
+  );
 }
