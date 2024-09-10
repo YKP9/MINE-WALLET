@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apiCalls/users";
 
 export function Login() {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       const response = await LoginUser(values);
@@ -11,6 +11,9 @@ export function Login() {
       if(response.success) {
         message.success(response.message);
         localStorage.setItem("token", response.data);
+        navigate("/")
+        // window.location.href = "/";
+
       }else{
         message.error(response.message);
       }
@@ -21,6 +24,7 @@ export function Login() {
       message.error(errorMessage);
   
     }
+
   };
 
   return (

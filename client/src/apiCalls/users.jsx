@@ -11,15 +11,27 @@ const LoginUser = async (payload) => {
     }
   };
 
+
   // Register User
 
 const RegisterUser = async (payload) => {
     try {
-      const { data } = await axiosInstance.post("/api/v1/users/register", payload);
-      return data;
+      const user = await axiosInstance.post("/api/v1/users/register", payload);
+      return user.data;
     } catch (error) {
       return error.response.data;
     }
   };
 
-  export  { LoginUser, RegisterUser }
+  // Get User Info
+
+const GetUserInfo = async () => {
+  try {
+    const { data } = await axiosInstance.post("/api/v1/users/current-user");
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
+  export  { LoginUser, RegisterUser, GetUserInfo }
