@@ -2,13 +2,17 @@ import { Form, Row, Col, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 
 import { RegisterUser } from "../../apiCalls/users";
+import { useDispatch } from "react-redux";
 
 
 export function Register() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
+      dispatch(ShowLoading());
       const response = await RegisterUser(values);
+      dispatch(HideLoading());
 
       if (response.success) {
         message.success(response.message);
@@ -17,6 +21,7 @@ export function Register() {
         message.error(response.message);
       }
     } catch (error) {
+      dispatch(HideLoading());
       message.error(error.message);
     }
   };

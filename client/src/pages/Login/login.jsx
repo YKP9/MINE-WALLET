@@ -2,13 +2,20 @@ import { Form, Row, Col, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apiCalls/users";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 
 export function Login() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     try {
+
+      dispatch(ShowLoading)
       const response = await LoginUser(values);
+      dispatch(HideLoading)
 
       if (response.success) {
         message.success(response.message);
@@ -20,6 +27,7 @@ export function Login() {
         message.error(response.message);
       }
     } catch (error) {
+      dispatch(HideLoading)
       const errorMessage = error.response?.data?.message || error.message;
       message.error(errorMessage);
     }

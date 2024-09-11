@@ -3,6 +3,7 @@ import { Login } from "./pages/Login/login";
 import { Home } from "./pages/Home/home";
 import { ProtectedRoute } from "./components/protectedRoutes";
 import { PublicRoute } from "./components/publicRoutes";
+import { Loader } from "./components/spinner";
 import "./styleSheets/alignments.css";
 import "./styleSheets/custom-components.css";
 import "./styleSheets/form-elements.css";
@@ -10,10 +11,13 @@ import "./styleSheets/layout.css";
 import "./styleSheets/text-elements.css";
 import "./styleSheets/theme.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { loading } = useSelector((state) => state.loaders);
   return (
     <div>
+      {loading && <Loader />}
       <BrowserRouter>
         <Routes>
           <Route
