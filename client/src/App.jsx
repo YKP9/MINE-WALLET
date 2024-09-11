@@ -13,6 +13,8 @@ import "./styleSheets/theme.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { TransactionHistory } from "./pages/Transactions/transaction";
+
 function App() {
   const { loading } = useSelector((state) => state.loaders);
   return (
@@ -41,6 +43,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/transactions"
+            element={
+              <ProtectedRoute>
+                <TransactionHistory />
               </ProtectedRoute>
             }
           />

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SetUser } from "../redux/usersSlice";
 import { HideLoading, ShowLoading } from "../redux/loadersSlice";
+import { AppLayout } from "./DefaultLayout";
 
 export function ProtectedRoute(props) {
   const [cookies] = useCookies(["token"]);
@@ -43,10 +44,12 @@ export function ProtectedRoute(props) {
   }, [cookies.token]);
 
   return user && <div>
-    {user.email}<br/>
+   <AppLayout>
+   {user.email}<br/>
     {user.firstName} &nbsp;
     {user.lastName}
     
     {props.children}
+   </AppLayout>
     </div>;
 }

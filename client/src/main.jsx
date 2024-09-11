@@ -7,6 +7,8 @@ import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 import store from "./redux/store.js"; 
 
+import 'remixicon/fonts/remixicon.css'
+
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
