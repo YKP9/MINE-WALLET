@@ -16,17 +16,15 @@ export function ProtectedRoute(props) {
 
   const getData = async () => {
     try {
-
       dispatch(ShowLoading());
       const response = await GetUserInfo();
       dispatch(HideLoading());
 
       if (response.success) {
         dispatch(SetUser(response.data));
-      }else{
+      } else {
         message.error(error.message);
         navigate("/login");
-        
       }
     } catch (error) {
       dispatch(HideLoading());
@@ -43,13 +41,11 @@ export function ProtectedRoute(props) {
     }
   }, [cookies.token]);
 
-  return user && <div>
-   <AppLayout>
-   {user.email}<br/>
-    {user.firstName} &nbsp;
-    {user.lastName}
-    
-    {props.children}
-   </AppLayout>
-    </div>;
+  return (
+    user && (
+      <div>
+        <AppLayout>{props.children}</AppLayout>
+      </div>
+    )
+  );
 }

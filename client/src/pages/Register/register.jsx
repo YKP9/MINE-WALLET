@@ -1,6 +1,6 @@
 import { Form, Row, Col, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-
+import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { RegisterUser } from "../../apiCalls/users";
 import { useDispatch } from "react-redux";
 

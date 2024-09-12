@@ -26,3 +26,16 @@
 .text-black{
     color: #000 !important;
 }
+.success-bg{    
+    background-color: rgb(68, 138, 68);
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.error-bg{    
+    background-color: rgba(221, 58, 55, 0.945);
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+}
