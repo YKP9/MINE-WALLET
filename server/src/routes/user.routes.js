@@ -4,7 +4,8 @@ import {
   loginUser,
   logoutUser,
   refreshAccessToken,
-  getCurrentUser
+  getCurrentUser,
+  
 } from "../controllers/user.controller.js";
 import { verifyJWT }  from "../middlewares/auth.middleware.js";
 

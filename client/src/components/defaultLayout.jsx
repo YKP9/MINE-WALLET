@@ -112,14 +112,14 @@ export function AppLayout(props) {
             {collapse && (
               <span
                 onClick={() => setCollapse(!collapse)}
-                className="ri-close-large-line text-secondary icons"
+                className="ri-menu-unfold-3-fill text-secondary icons"
               ></span>
             )}
 
             {!collapse && (
               <span
                 onClick={() => setCollapse(!collapse)}
-                className="ri-menu-unfold-3-fill text-secondary icons"
+                className="ri-close-large-line text-secondary icons"
               ></span>
             )}
           </div>

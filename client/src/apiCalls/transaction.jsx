@@ -28,4 +28,17 @@ export const TransferFunds = async (payload) => {
   }
 };
 
+// Get All Transactions For a User
 
+export const GetTransactionsOfUser = async () => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/api/v1/transactions/get-transactions"
+    );
+    return data;
+
+  } catch (error) {
+    return error.response ? error.response.data : { success: false, message: "Network error" };
+
+  }
+};

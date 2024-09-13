@@ -2,6 +2,7 @@
 :root{
     --primary : #002E2A;
     --secondary : #f8b944;
+    --tertiary : #410303e4;
 
 }
 
@@ -39,3 +40,6 @@
     padding: 10px;
     border-radius: 3px;
 }
+.bg-tertiary {
+    background-color: var(--tertiary) !important;
+  }

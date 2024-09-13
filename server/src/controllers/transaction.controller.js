@@ -10,13 +10,9 @@ import mongoose from "mongoose";
 const transferFunds = asyncHandler(async (req, res) => {
   const { sender, receiver, amount, reference, status } = req.body;
 
- 
-
   // Convert amount to number
 
   const parsedAmount = parseFloat(amount);
-
- 
 
   //check if sender and receiver exists
   const senderUser = await User.findById(sender);
@@ -83,4 +79,23 @@ const verifyReceiver = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, user, "Account Verified"));
 });
 
-export { transferFunds, verifyReceiver };
+// Get All Transactions For a User.
+
+const getAllTransactionsByUser = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user._id
+    const transactions = await Transaction.find({
+      $or: [{ receiver: userId }, { sender: userId }],
+    }) .sort({ createdAt: -1 })
+    .populate("sender")
+    .populate("receiver");;
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, transactions, " Transactions Fetched Successfully"));
+  } catch (error) {
+    throw new ApiError(500, "Failed to fetch transactions");
+  }
+});
+
+export { transferFunds, verifyReceiver, getAllTransactionsByUser };
