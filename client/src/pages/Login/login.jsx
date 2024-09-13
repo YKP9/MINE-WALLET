@@ -13,9 +13,9 @@ export function Login() {
   const onFinish = async (values) => {
     try {
 
-      dispatch(ShowLoading)
+      dispatch(ShowLoading())
       const response = await LoginUser(values);
-      dispatch(HideLoading)
+      dispatch(HideLoading())
 
       if (response.success) {
         message.success(response.message);
@@ -27,7 +27,7 @@ export function Login() {
         message.error(response.message);
       }
     } catch (error) {
-      dispatch(HideLoading)
+      dispatch(HideLoading())
       const errorMessage = error.response?.data?.message || error.message;
       message.error(errorMessage);
     }

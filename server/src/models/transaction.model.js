@@ -19,12 +19,12 @@ const transactionSchema = new mongoose.Schema(
 
     reference: {
       type: String,
-      required: true,
+      default: "no reference",
     },
     status: {
       type: String,
-      enum: ["pending", "success", "failed"],
       required: true,
+      enum: ["pending", "success", "failed"],
     },
   },
   { timestamps: true }
