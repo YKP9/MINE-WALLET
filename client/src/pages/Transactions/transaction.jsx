@@ -1,7 +1,8 @@
 import { PageHeading } from "../../components/pageTitle";
-import { Table,message } from "antd";
+import { Table, message } from "antd";
 import { useEffect, useState } from "react";
 import { TransactionModal } from "./transferFundsModal";
+import { DepositMoneyModal } from "./depositFundsModal";
 import { GetTransactionsOfUser } from "../../apiCalls/transaction";
 import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/loadersSlice";
@@ -12,17 +13,18 @@ export function TransactionHistory() {
   const [data = [], setData] = useState([]);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
+  const [showDepositModal, setShowDepositModal] = useState(false);
 
   const columns = [
     {
       title: "Date",
       dataIndex: "date",
-      render : (date) => moment(date).format("DD-MM-YYYY        hh:mm A"),
+      render: (date) => moment(date).format("DD-MM-YYYY        hh:mm A"),
     },
     {
       title: "Time",
       dataIndex: "date",
-      render : (date) => moment(date).format(" hh:mm:ss A"),
+      render: (date) => moment(date).format(" hh:mm:ss A"),
     },
     {
       title: "Transaction ID",
@@ -35,9 +37,9 @@ export function TransactionHistory() {
     {
       title: "Type",
       dataIndex: "type",
-      render : ( text, record ) => {
+      render: (text, record) => {
         return record.sender._id === user._id ? "Debit" : "Credit";
-      }
+      },
     },
     {
       title: "Reference Account",
@@ -79,15 +81,12 @@ export function TransactionHistory() {
     try {
       dispatch(ShowLoading());
       const response = await GetTransactionsOfUser();
-      
-      
+
       if (response.success) {
-        setData(  response.data);
+        setData(response.data);
         dispatch(HideLoading());
-      }
-      else {
-      
-        message.error(response.message); 
+      } else {
+        message.error(response.message);
       }
     } catch (error) {
       dispatch(HideLoading());
@@ -97,7 +96,6 @@ export function TransactionHistory() {
 
   useEffect(() => {
     getTransactionData();
-    
   }, []);
 
   return (
@@ -106,7 +104,12 @@ export function TransactionHistory() {
         <PageHeading title="Transactions" />
 
         <div className="flex gap-1">
-          <button className="primary-outlined-btn">Deposit</button>
+          <button
+            className="primary-outlined-btn"
+            onClick={() => setShowDepositModal(true)}
+          >
+            Deposit
+          </button>
           <button
             className="primary-contained-btn"
             onClick={() => setShowTransferFundsModal(true)}
@@ -116,17 +119,21 @@ export function TransactionHistory() {
         </div>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={data}
-       
-        className="mt-2"
-      />
+      <Table columns={columns} dataSource={data} className="mt-2" />
 
       {showTransferFundsModal && (
         <TransactionModal
           showTransferFundsModal={showTransferFundsModal}
           setShowTransferFundsModal={setShowTransferFundsModal}
+          reloadData={getTransactionData}
+        />
+      )}
+
+      {showDepositModal && (
+        < DepositMoneyModal
+          showDepositModal={showDepositModal}
+          setShowDepositModal={setShowDepositModal}
+          reloadData={getTransactionData}
         />
       )}
     </div>

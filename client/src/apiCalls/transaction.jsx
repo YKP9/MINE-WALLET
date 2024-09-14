@@ -42,3 +42,29 @@ export const GetTransactionsOfUser = async () => {
 
   }
 };
+
+//
+export const checkoutSession = async (payload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/api/v1/transactions/create-checkout-session",
+      payload
+    )
+    return data
+  } catch (error) {
+    return error.response.data
+  }
+}
+
+// Deposit Funds
+
+export const DepositFunds = async (payload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/api/v1/transactions/deposit-funds",payload
+    )
+    return data
+  } catch (error) {
+    return error.response.data
+  }
+}

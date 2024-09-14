@@ -4,6 +4,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Transaction } from "../models/transaction.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+
 
 // Transfer funds from one user to another.
 
@@ -83,19 +89,188 @@ const verifyReceiver = asyncHandler(async (req, res) => {
 
 const getAllTransactionsByUser = asyncHandler(async (req, res) => {
   try {
-    const userId = req.user._id
+    const userId = req.user._id;
     const transactions = await Transaction.find({
       $or: [{ receiver: userId }, { sender: userId }],
-    }) .sort({ createdAt: -1 })
-    .populate("sender")
-    .populate("receiver");;
+    })
+      .sort({ createdAt: -1 })
+      .populate("sender")
+      .populate("receiver");
 
     return res
-    .status(200)
-    .json(new ApiResponse(200, transactions, " Transactions Fetched Successfully"));
+      .status(200)
+      .json(
+        new ApiResponse(200, transactions, " Transactions Fetched Successfully")
+      );
   } catch (error) {
     throw new ApiError(500, "Failed to fetch transactions");
   }
 });
 
-export { transferFunds, verifyReceiver, getAllTransactionsByUser };
+// Create a Stripe Checkout Session
+const createCheckoutSession = asyncHandler(async (req, res) => {
+  const { amount } = req.body;
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "MineWallet Deposit",
+            },
+            unit_amount: parseFloat(amount) * 100,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${process.env.CLIENT_URL}/success`, // Redirect after successful payment
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,  // Redirect after cancellation
+    });
+
+    if (!session.url) {
+      throw new ApiError(500, "Unable to create checkout session");
+    }
+    
+
+    res.status(200).json({ url: session.url });
+  } catch (error) {
+    console.error("Stripe error:", error);
+    throw new ApiError(500, "Failed to create checkout session");
+  }
+});
+
+// // Deposit Funds In Wallet Using Stripe
+
+// const depositFunds = asyncHandler(async (req, res) => {
+  
+// const userId = req.user._id;
+//   const session = await mongoose.startSession();
+//   session.startTransaction();
+
+//   try {
+//     const { amount } = req.body;
+
+    
+
+//     // // Create a customer on Stripe
+//     // const customer = await stripe.customers.create({
+//     //   email: token.email,
+//     //   source: token.id,
+//     // });
+
+//      // Save the transaction
+
+//      const newTransaction = new Transaction({
+//       sender: userId,
+//       receiver: userId,
+//       amount: parseFloat(amount),
+//       type: "deposit",
+//       reference: "Stripe deposit",
+//       status: "success",
+//     });
+
+//     await newTransaction.save({ session });
+
+//     // Create a charge on Stripe
+//     const charge = await stripe.charges.create(
+//       {
+//         amount: parsedAmount,
+//         currency: "usd",
+//         customer: customer.id,
+//         receipt_email: token.email,
+//         description: `Deposit to MineWallet`,
+//       },
+//       {
+//         idempotencyKey: uuidv4(), // Unique key to prevent duplicate charges
+//       }
+//     );
+
+//     // Check if the charge was successful
+//     if (charge.status === "succeeded") {
+//       // Save the transaction
+//       const newTransaction = new Transaction({
+//         sender: userId,
+//         receiver: userId, // For deposit, sender and receiver are the same
+//         amount: parsedAmount / 100, // Convert back to dollars
+//         type: "deposit",
+//         reference: "Stripe deposit",
+//         status: "success",
+//       });
+//       await newTransaction.save({ session });
+
+// // Update the user's balance
+// await User.findByIdAndUpdate(userId, {
+//   $inc: { balance: parsedAmount / 100 }, // Increase balance
+// }, { session });
+
+// // Commit the transaction
+// await session.commitTransaction();
+// session.endSession();
+
+// return res
+// .status(201)
+// .json( new ApiResponse(201, newTransaction, "Deposit successful"));
+ 
+//     } else {
+//       await session.abortTransaction();
+//       session.endSession();
+
+//       throw new ApiError(500, "Deposit failed");
+
+//     }
+//   } catch (error) {
+//     console.error('Transaction error:', error); // Log error details
+//     await session.abortTransaction();
+//     session.endSession();
+
+//     throw new ApiError(500, "Deposit failed");
+//   }
+// });
+
+const depositFunds = asyncHandler(async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const { amount, userId } = req.body;
+
+    // Save the transaction
+    const newTransaction = new Transaction({
+      sender: userId,
+      receiver: userId,
+      amount: parseFloat(amount),
+      type: "deposit",
+      reference: "Stripe deposit",
+      status: "success",
+    });
+
+    await newTransaction.save({ session });
+
+    // Update user's balance
+    await User.findByIdAndUpdate(userId, {
+      $inc: { balance: parseFloat(amount) },
+    }, { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.status(201).json(new ApiResponse(201, newTransaction, "Deposit successful"));
+  } catch (error) {
+    console.error("Transaction error:", error);
+    await session.abortTransaction();
+    session.endSession();
+    throw new ApiError(500, "Deposit failed");
+  }
+});
+
+export {
+  transferFunds,
+  verifyReceiver,
+  getAllTransactionsByUser,
+  createCheckoutSession,
+  depositFunds,
+};
