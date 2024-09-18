@@ -1,0 +1,27 @@
+/* TransactionFailed.css */
+.fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  .fade-exit {
+    opacity: 1;
+  }
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+  }
+  
+  .transaction-failed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    font-family: Arial, sans-serif;
+  }
+  
