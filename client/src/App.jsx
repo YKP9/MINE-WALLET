@@ -10,6 +10,7 @@ import { Loader } from "./components/spinner";
 import { TransactionHistory } from "./pages/Transactions/transaction";
 import { TransactionSuccessul } from "./pages/MessagePopup/Success";
 import { TransactionFailed } from "./pages/MessagePopup/Failed";
+import { RequestMoney } from "./pages/Request/requestFund";
 
 import "./styleSheets/alignments.css";
 import "./styleSheets/custom-components.css";
@@ -61,7 +62,7 @@ function App() {
             }
           />
           <Route
-            path="successful-transaction"
+            path="/successful-transaction"
             element={
               <ProtectedRoute>
                 <TransactionSuccessul />
@@ -69,10 +70,18 @@ function App() {
             }
           />
           <Route
-            path="failed-transaction"
+            path="/failed-transaction"
             element={
               <ProtectedRoute>
                 <TransactionFailed />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/requests"
+            element={
+              <ProtectedRoute>
+                <RequestMoney />
               </ProtectedRoute>
             }
           />
