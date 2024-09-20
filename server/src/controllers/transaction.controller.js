@@ -4,12 +4,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Transaction } from "../models/transaction.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-
 
 // Transfer funds from one user to another.
 
@@ -62,6 +59,9 @@ const transferFunds = asyncHandler(async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
+    console.log("Sender new balance:", senderUser.balance);
+    console.log("Receiver new balance:", receiverUser.balance);
+
     return res
       .status(201)
       .json(new ApiResponse(201, newTransaction, "Transaction successful"));
@@ -108,8 +108,10 @@ const getAllTransactionsByUser = asyncHandler(async (req, res) => {
 });
 
 // Create a Stripe Checkout Session
+
 const createCheckoutSession = asyncHandler(async (req, res) => {
   const { amount } = req.body;
+  
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -127,116 +129,40 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.CLIENT_URL}/success`, // Redirect after successful payment
-      cancel_url: `${process.env.CLIENT_URL}/cancel`,  // Redirect after cancellation
+      success_url: `http://localhost:5173/successful-transaction`,
+      cancel_url: `http://localhost:5173/failed-transaction`,
     });
 
-    if (!session.url) {
-      throw new ApiError(500, "Unable to create checkout session");
-    }
     
 
-    res.status(200).json({ url: session.url });
+    if (session && session.url) {
+      
+      return res.status(200).json(new ApiResponse(200, { url: session.url }));
+    } else {
+      
+      throw new ApiError(500, "Failed to create checkout session");
+    }
+
+    // res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error("Stripe error:", error);
+    
     throw new ApiError(500, "Failed to create checkout session");
   }
 });
 
-// // Deposit Funds In Wallet Using Stripe
-
-// const depositFunds = asyncHandler(async (req, res) => {
-  
-// const userId = req.user._id;
-//   const session = await mongoose.startSession();
-//   session.startTransaction();
-
-//   try {
-//     const { amount } = req.body;
-
-    
-
-//     // // Create a customer on Stripe
-//     // const customer = await stripe.customers.create({
-//     //   email: token.email,
-//     //   source: token.id,
-//     // });
-
-//      // Save the transaction
-
-//      const newTransaction = new Transaction({
-//       sender: userId,
-//       receiver: userId,
-//       amount: parseFloat(amount),
-//       type: "deposit",
-//       reference: "Stripe deposit",
-//       status: "success",
-//     });
-
-//     await newTransaction.save({ session });
-
-//     // Create a charge on Stripe
-//     const charge = await stripe.charges.create(
-//       {
-//         amount: parsedAmount,
-//         currency: "usd",
-//         customer: customer.id,
-//         receipt_email: token.email,
-//         description: `Deposit to MineWallet`,
-//       },
-//       {
-//         idempotencyKey: uuidv4(), // Unique key to prevent duplicate charges
-//       }
-//     );
-
-//     // Check if the charge was successful
-//     if (charge.status === "succeeded") {
-//       // Save the transaction
-//       const newTransaction = new Transaction({
-//         sender: userId,
-//         receiver: userId, // For deposit, sender and receiver are the same
-//         amount: parsedAmount / 100, // Convert back to dollars
-//         type: "deposit",
-//         reference: "Stripe deposit",
-//         status: "success",
-//       });
-//       await newTransaction.save({ session });
-
-// // Update the user's balance
-// await User.findByIdAndUpdate(userId, {
-//   $inc: { balance: parsedAmount / 100 }, // Increase balance
-// }, { session });
-
-// // Commit the transaction
-// await session.commitTransaction();
-// session.endSession();
-
-// return res
-// .status(201)
-// .json( new ApiResponse(201, newTransaction, "Deposit successful"));
- 
-//     } else {
-//       await session.abortTransaction();
-//       session.endSession();
-
-//       throw new ApiError(500, "Deposit failed");
-
-//     }
-//   } catch (error) {
-//     console.error('Transaction error:', error); // Log error details
-//     await session.abortTransaction();
-//     session.endSession();
-
-//     throw new ApiError(500, "Deposit failed");
-//   }
-// });
-
+// Deposit Funds
 const depositFunds = asyncHandler(async (req, res) => {
+  
+  
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
-    const { amount, userId } = req.body;
+    const { amount } = req.body;
+    const userId = req.user._id;
+     console.log("USERID : ", userId);
+     console.log(`Amount to deposit: ${parseFloat(amount)}`); // Log amount
+     console.log(`User ID: ${userId}`); // Log user ID
 
     // Save the transaction
     const newTransaction = new Transaction({
@@ -251,14 +177,25 @@ const depositFunds = asyncHandler(async (req, res) => {
     await newTransaction.save({ session });
 
     // Update user's balance
-    await User.findByIdAndUpdate(userId, {
-      $inc: { balance: parseFloat(amount) },
-    }, { session });
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: { balance: parseFloat(amount) },
+      },
+      {  new : true,session }
+    );
 
     await session.commitTransaction();
     session.endSession();
 
-    return res.status(201).json(new ApiResponse(201, newTransaction, "Deposit successful"));
+    console.log("Updated user balance:", updatedUser.balance); // Log updated balance
+
+   
+    
+
+    return res
+      .status(201)
+      .json(new ApiResponse(201, { Transaction: newTransaction, newBalance : updatedUser.balance }, "Deposit successful"));
   } catch (error) {
     console.error("Transaction error:", error);
     await session.abortTransaction();

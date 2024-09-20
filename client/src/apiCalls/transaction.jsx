@@ -36,35 +36,37 @@ export const GetTransactionsOfUser = async () => {
       "/api/v1/transactions/get-transactions"
     );
     return data;
-
   } catch (error) {
-    return error.response ? error.response.data : { success: false, message: "Network error" };
-
+    return error.response
+      ? error.response.data
+      : { success: false, message: "Network error" };
   }
 };
 
 //
 export const checkoutSession = async (payload) => {
   try {
-    const { data } = await axiosInstance.post(
+    const response = await axiosInstance.post(
       "/api/v1/transactions/create-checkout-session",
       payload
-    )
-    return data
+    );
+    return response; 
   } catch (error) {
-    return error.response.data
+    console.error("Checkout session API error:", error);
+    return error.response.data;
   }
-}
+};
 
 // Deposit Funds
 
 export const DepositFunds = async (payload) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/transactions/deposit-funds",payload
-    )
-    return data
+      "/api/v1/transactions/deposit-funds",
+      payload
+    );
+    return data;
   } catch (error) {
-    return error.response.data
+    return error.response.data;
   }
-}
+};

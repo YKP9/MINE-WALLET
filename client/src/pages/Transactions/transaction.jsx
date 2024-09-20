@@ -38,19 +38,19 @@ export function TransactionHistory() {
       title: "Type",
       dataIndex: "type",
       render: (text, record) => {
-        return record.sender._id === user._id ? "Debit" : "Credit";
+        if (record.sender._id === record.receiver._id) {
+          return "Deposit";
+        } else if (record.sender._id === user._id) {
+          return "Debit";
+        } else return "Credit";
       },
+      
     },
     {
       title: "Reference Account",
       dataIndex: "",
 
-      // Render method for reference account number
-      // render : ( text, record ) => {
-      //   return record.sender === user._id ? record.sender._id : record.receiver._id;
-      // }
-
-      // Render method for sender and receiver name
+      
       render: (text, record) => {
         return record.sender._id === user._id ? (
           <div>

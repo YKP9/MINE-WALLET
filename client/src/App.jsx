@@ -61,7 +61,7 @@ function App() {
             }
           />
           <Route
-            path="/successful-transaction"
+            path="successful-transaction"
             element={
               <ProtectedRoute>
                 <TransactionSuccessul />
@@ -69,14 +69,13 @@ function App() {
             }
           />
           <Route
-            path="/failed-transaction"
+            path="failed-transaction"
             element={
               <ProtectedRoute>
                 <TransactionFailed />
               </ProtectedRoute>
             }
           />
-
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,11 +1,8 @@
-import { Modal, Form } from "antd";
-import StripeCheckout from "react-stripe-checkout";
-import { DepositFunds } from "../../apiCalls/transaction";
+import { Modal, Form, message } from "antd";
 import { checkoutSession } from "../../apiCalls/transaction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
-import { message } from "antd";
-import { useSelector } from "react-redux";
+import { DepositFunds } from "../../apiCalls/transaction";
 
 export function DepositMoneyModal({
   showDepositModal,
@@ -16,48 +13,44 @@ export function DepositMoneyModal({
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
 
-  // const onToken = async (token) => {
-  //   try {
-  //     dispatch(ShowLoading());
-  //     const response = await DepositFunds({
-  //       token,
-  //       amount: form.getFieldValue("amount"),
-  //     });
-
-  //     dispatch(HideLoading());
-
-  //     if (response.success) {
-
-  //       setShowDepositModal(false);
-  //       message.success(response.message);
-  //       reloadData();
-  //     } else {
-  //       message.error(response.message);
-  //     }
-  //   } catch (error) {
-  //     dispatch(HideLoading());
-  //     message.error(error.message);
-  //   }
-  // };
-
   const handleCheckout = async () => {
     try {
       dispatch(ShowLoading());
       const amount = form.getFieldValue("amount");
-      const userId = user._id
+      const userId = user._id;
 
-      const { data: sessionData } = await checkoutSession({ amount, userId });
+      const response = await checkoutSession({ amount, userId });
+      console.log("Api Response:", response); // Add this line to check the response
+
+      if (response && response.data && response.data.success) {
+        const url = response.data.data.url;
+        console.log("Session URL:", url); // Verify the URL
+        if (url) {
+          window.location.href = url; // Redirect to Stripe Checkout
+        } else {
+          message.error("Checkout session URL is missing.");
+        }
+      } else {
+        message.error("No data found in API response.");
+      }
+
+      // Call DepositFunds after successful payment
+    const depositResponse = await DepositFunds({ amount });
+    if (depositResponse.success) {
+      message.success(depositResponse.message);
+      reloadData(); // Reload the data to show updated balance
+    } else {
+      message.error(depositResponse.message);
+    }
 
       dispatch(HideLoading());
-
-      if (sessionData.url) {
-        window.location.href = sessionData.url; // Redirect to Stripe Checkout
-      } else {
-        message.error("Unable to create checkout session");
-      }
     } catch (error) {
       dispatch(HideLoading());
-      message.error(error.message);
+      console.error("Checkout session error:", error);
+      const errorMessage =
+        error.response?.data?.message || "An error occurred. Please try again."; // Provide a more informative error message
+
+      message.error(errorMessage);
     }
   };
   return (
@@ -82,9 +75,16 @@ export function DepositMoneyModal({
           </Form.Item>
 
           <div className="flex gap-1 justify-end">
-            <button className="primary-outlined-btn" onClick={() => setShowDepositModal(false)}>Cancel</button>
+            <button
+              className="primary-outlined-btn"
+              onClick={() => setShowDepositModal(false)}
+            >
+              Cancel
+            </button>
 
-            <button className="primary-contained-btn" onClick={handleCheckout}>Deposit</button>
+            <button className="primary-contained-btn" onClick={handleCheckout}>
+              Deposit
+            </button>
           </div>
         </Form>
       </div>
