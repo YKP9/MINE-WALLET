@@ -30,3 +30,21 @@ export const SendRequest = async (requests) => {
       : { success: false, message: "Network error" };
   }
 };
+
+// Update Request Status
+
+export const UpdateRequestStatus = async (requests) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/api/v1/requests/update-request-status", {
+        requestId : record._id,
+        status : record.status
+      }
+   );
+    return data;
+  } catch (error) {
+    return error.response
+      ? error.response.data
+      : { success: false, message: "Network error" };
+  }
+}
