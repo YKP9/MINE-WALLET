@@ -9,6 +9,7 @@ import { SendRequest } from "../../apiCalls/request";
 export function NewRequestModal({
   showNewRequestModal,
   setShowNewRequestModal,
+  reloadData,
 }) {
   const { user } = useSelector((state) => state.users);
   const [isVerified, setIsVerified] = useState("");
@@ -63,7 +64,7 @@ export function NewRequestModal({
         reloadData();
         setShowNewRequestModal(false);
         message.success(response.message);
-        dispatch(ReloadUser(true));
+        
       } else {
         message.error(response.message);
       }

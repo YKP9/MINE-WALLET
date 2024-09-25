@@ -8,6 +8,7 @@ import { TransferFunds } from "../../apiCalls/transaction";
 export function TransactionModal({
   showTransferFundsModal,
   setShowTransferFundsModal,
+  reloadData,
 }) {
   const { user } = useSelector((state) => state.users);
   const [isVerified, setIsVerified] = useState("");
@@ -58,7 +59,7 @@ export function TransactionModal({
         reloadData();
         setShowTransferFundsModal(false);
         message.success(response.message);
-        dispatch(ReloadUser(true));
+        
       } else {
         message.error(response.message);
       }

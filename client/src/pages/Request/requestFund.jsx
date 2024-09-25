@@ -165,6 +165,7 @@ export function RequestMoney() {
         <NewRequestModal
           showNewRequestModal={showNewRequestModal}
           setShowNewRequestModal={setShowNewRequestModal}
+          reloadData={getAllRequests}
         />
       )}
     </div>
