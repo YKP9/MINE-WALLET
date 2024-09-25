@@ -1,4 +1,4 @@
-import { Tabs, Table,message } from "antd";
+import { Tabs, Table, message } from "antd";
 import { PageHeading } from "../../components/pageTitle";
 import { useState, useEffect } from "react";
 import { NewRequestModal } from "./newRequestModal";
@@ -13,7 +13,6 @@ export function RequestMoney() {
   const [data = [], setData] = useState({ sent: [], received: [] });
   const [showNewRequestModal, setShowNewRequestModal] = useState(false);
 
-  
   const columns = [
     {
       title: "Request ID",
@@ -87,6 +86,32 @@ export function RequestMoney() {
           received: receivedData,
         });
         dispatch(HideLoading());
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
+
+  const updateStatus = async (record, status) => {
+    try {
+      dispatch(ShowLoading());
+        // Extract the ID and status
+    const requestId = record._id; // Get the request ID from the record
+
+    // Log to confirm
+    console.log("Updating request with ID:", requestId, "to status:", status);
+
+      const response = await UpdateRequestStatus({
+        requestId  : record._id,
+        status,
+      });
+      dispatch(HideLoading());
+      if (response.success) {
+        message.success(response.message);
+        getAllRequests();
       } else {
         message.error(response.message);
       }

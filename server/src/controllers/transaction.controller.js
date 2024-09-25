@@ -111,7 +111,6 @@ const getAllTransactionsByUser = asyncHandler(async (req, res) => {
 
 const createCheckoutSession = asyncHandler(async (req, res) => {
   const { amount } = req.body;
-  
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -133,36 +132,29 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
       cancel_url: `http://localhost:5173/failed-transaction`,
     });
 
-    
-
     if (session && session.url) {
-      
       return res.status(200).json(new ApiResponse(200, { url: session.url }));
     } else {
-      
       throw new ApiError(500, "Failed to create checkout session");
     }
 
     // res.status(200).json({ url: session.url });
   } catch (error) {
-    
     throw new ApiError(500, "Failed to create checkout session");
   }
 });
 
 // Deposit Funds
 const depositFunds = asyncHandler(async (req, res) => {
-  
-  
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
     const { amount } = req.body;
     const userId = req.user._id;
-     console.log("USERID : ", userId);
-     console.log(`Amount to deposit: ${parseFloat(amount)}`); // Log amount
-     console.log(`User ID: ${userId}`); // Log user ID
+    console.log("USERID : ", userId);
+    console.log(`Amount to deposit: ${parseFloat(amount)}`); // Log amount
+    console.log(`User ID: ${userId}`); // Log user ID
 
     // Save the transaction
     const newTransaction = new Transaction({
@@ -182,7 +174,7 @@ const depositFunds = asyncHandler(async (req, res) => {
       {
         $inc: { balance: parseFloat(amount) },
       },
-      {  new : true,session }
+      { new: true, session }
     );
 
     await session.commitTransaction();
@@ -190,12 +182,15 @@ const depositFunds = asyncHandler(async (req, res) => {
 
     console.log("Updated user balance:", updatedUser.balance); // Log updated balance
 
-   
-    
-
     return res
       .status(201)
-      .json(new ApiResponse(201, { Transaction: newTransaction, newBalance : updatedUser.balance }, "Deposit successful"));
+      .json(
+        new ApiResponse(
+          201,
+          { Transaction: newTransaction, newBalance: updatedUser.balance },
+          "Deposit successful"
+        )
+      );
   } catch (error) {
     console.error("Transaction error:", error);
     await session.abortTransaction();

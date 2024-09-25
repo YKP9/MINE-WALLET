@@ -55,10 +55,10 @@ export function TransactionModal({
       
 
       if (response.success) {
-        // reloadData();
+        reloadData();
         setShowTransferFundsModal(false);
         message.success(response.message);
-        // dispatch(ReloadUser(true));
+        dispatch(ReloadUser(true));
       } else {
         message.error(response.message);
       }

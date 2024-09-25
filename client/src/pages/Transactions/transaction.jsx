@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/loadersSlice";
 import moment from "moment";
 
+
 export function TransactionHistory() {
   const [showTransferFundsModal, setShowTransferFundsModal] = useState(false);
   const [data = [], setData] = useState([]);
@@ -44,13 +45,11 @@ export function TransactionHistory() {
           return "Debit";
         } else return "Credit";
       },
-      
     },
     {
       title: "Reference Account",
       dataIndex: "",
 
-      
       render: (text, record) => {
         return record.sender._id === user._id ? (
           <div>
@@ -130,7 +129,7 @@ export function TransactionHistory() {
       )}
 
       {showDepositModal && (
-        < DepositMoneyModal
+        <DepositMoneyModal
           showDepositModal={showDepositModal}
           setShowDepositModal={setShowDepositModal}
           reloadData={getTransactionData}

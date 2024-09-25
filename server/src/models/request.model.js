@@ -25,7 +25,7 @@ description: {
 status: {
     type: String,
     default: "pending",
-    enum: ["pending", "success", "failed"],
+    enum: ["pending", "accepted", "rejected"],
 },
     }
     ,

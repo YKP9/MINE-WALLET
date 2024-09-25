@@ -60,10 +60,10 @@ export function NewRequestModal({
       
 
       if (response.success) {
-        // reloadData();
+        reloadData();
         setShowNewRequestModal(false);
         message.success(response.message);
-        // dispatch(ReloadUser(true));
+        dispatch(ReloadUser(true));
       } else {
         message.error(response.message);
       }

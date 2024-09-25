@@ -36,10 +36,8 @@ export const SendRequest = async (requests) => {
 export const UpdateRequestStatus = async (requests) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/requests/update-request-status", {
-        requestId : record._id,
-        status : record.status
-      }
+      "/api/v1/requests/update-request-status",
+      requests
    );
     return data;
   } catch (error) {
