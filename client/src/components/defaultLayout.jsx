@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export function AppLayout(props) {
   const { user } = useSelector((state) => state.users);
   const [collapse, setCollapse] = useState(false);
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const userMenu = [
     {
@@ -36,7 +38,7 @@ export function AppLayout(props) {
       title: "LogOut",
       icon: <span className="ri-logout-circle-r-line icons"></span>,
       onClick: () => {
-        localStorage.removeItem("token");
+        removeCookie("token");
         navigate("/login");
       },
       path: "/logout",
@@ -78,7 +80,7 @@ export function AppLayout(props) {
       title: "LogOut",
       icon: <span className="ri-logout-circle-r-line icons"></span>,
       onClick: () => {
-        localStorage.removeItem("token");
+        removeCookie("token");
         navigate("/login");
       },
       path: "/logout",
