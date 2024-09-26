@@ -33,4 +33,11 @@ const GetUserInfo = async () => {
   }
 };
 
-export { LoginUser, RegisterUser, GetUserInfo };
+
+
+export {
+  LoginUser,
+  RegisterUser,
+  GetUserInfo,
+  
+};

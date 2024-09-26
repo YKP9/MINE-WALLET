@@ -108,6 +108,10 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Check Password, Invalid User Credentials");
   }
 
+  if (!user.isVerified) {
+    throw new ApiError(401, "Your Account is not verified Yet, or has been suspended");
+  }
+
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
     user._id
   ); 
@@ -268,11 +272,14 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Account Details Updated Successfully"));
 });
 
+
+
 export { registerUser ,
          loginUser,
          logoutUser,
          refreshAccessToken,
          changeCurrentPassword,
          getCurrentUser,
-         updateAccountDetails
+         updateAccountDetails,
+         
        };

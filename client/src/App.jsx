@@ -11,6 +11,8 @@ import { TransactionHistory } from "./pages/Transactions/transaction";
 import { TransactionSuccessul } from "./pages/MessagePopup/Success";
 import { TransactionFailed } from "./pages/MessagePopup/Failed";
 import { RequestMoney } from "./pages/Request/requestFund";
+import { AdminVerification } from "./pages/Users/users";
+import { TransactionDashboard } from "./pages/Users/usersTransaction";
 
 import "./styleSheets/alignments.css";
 import "./styleSheets/custom-components.css";
@@ -85,6 +87,18 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+         <Route  path="/users" element={ 
+          <ProtectedRoute>
+          < AdminVerification />
+         </ProtectedRoute>
+          } />
+
+          <Route path="/admin-transactions" element = {
+            <ProtectedRoute>
+              <TransactionDashboard />
+            </ProtectedRoute>
+          }   />
         </Routes>
       </BrowserRouter>
     </div>

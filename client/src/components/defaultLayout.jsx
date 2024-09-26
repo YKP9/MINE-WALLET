@@ -59,17 +59,17 @@ export function AppLayout(props) {
       path: "/users",
     },
     {
-      title: "Transaction",
+      title: "Transactions",
       icon: <span className="ri-bank-line icons"></span>,
-      onClick: () => navigate("/transactions"),
-      path: "/transactions",
+      onClick: () => navigate("/admin-transactions"),
+      path: "/admin-transactions",
     },
-    {
-      title: "Requests",
-      icon: <span className="ri-hand-heart-fill icons"></span>,
-      onClick: () => navigate("/requests"),
-      path: "/requests",
-    },
+    // {
+    //   title: "Requests",
+    //   icon: <span className="ri-hand-heart-fill icons"></span>,
+    //   onClick: () => navigate("/requests"),
+    //   path: "/requests",
+    // },
     {
       title: "Profile",
       icon: <i class="ri-account-circle-line icons"></i>,
