@@ -73,10 +73,9 @@ export function Register() {
             <Form.Item label="Identification Type" name="identificationType">
               <select>
                 <option value="-1">SELECT</option>
-                <option value="National ID">National ID</option>
-                <option value="Passport">Passport</option>
-                <option value="Driving License">Driving License</option>
-                <option value="Social Card">Social Security Card (SSN)</option>
+                <option value="Aadhar"> Aadhar Card Number</option>
+                <option value="PAN">PAN Number</option>
+                
               </select>
             </Form.Item>
           </Col>
