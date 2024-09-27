@@ -4,6 +4,43 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { Transaction } from "../models/transaction.model.js";
 
+const updateUserVerificationStatus = asyncHandler(async (req, res) => {
+  try {
+    const { userId, isVerified } = req.body;
+    console.log("Received userId:", userId);
+    console.log("Received isVerified:", isVerified);
+
+
+    // // Find the user by ID and update their verification status
+    // const user = await User.findById(userId);
+    // if (!user) {
+    //   throw new ApiError(404, "User not found");
+    // }
+
+    // user.isVerified = isVerified;
+    // await user.save();
+
+    // Update user verification status directly
+    const user = await User.updateOne(
+      { _id: userId },
+      { $set: { isVerified } }
+    );
+
+    if (user.nModified === 0) {
+      throw new ApiError(404, "User not found or verification status unchanged");
+    }
+
+    const message = isVerified
+      ? "User Verified Successfully"
+      : "User Suspended Successfully";
+
+    return res.status(200).json(new ApiResponse(200, user, message));
+  } catch (error) {
+    console.error("Error updating user verification status:", error);
+    throw new ApiError(500, "Failed to verify User");
+  }
+});
+
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
     const users = await User.find();
@@ -15,29 +52,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, users, "Users fetched successfully"));
   } catch (error) {
     throw new ApiError(500, "Failed to fetch users");
-  }
-});
-
-const updateUserVerificationStatus = asyncHandler(async (req, res) => {
-  try {
-    const { userId, isVerified } = req.body;
-
-    // Find the user by ID and update their verification status
-    const user = await User.findById(userId);
-    if (!user) {
-      throw new ApiError(404, "User not found");
-    }
-
-    user.isVerified = isVerified;
-    await user.save();
-
-    const message = isVerified
-      ? "User Verified Successfully"
-      : "User Suspended Successfully";
-
-    return res.status(200).json(new ApiResponse(200, user, message));
-  } catch (error) {
-    throw new ApiError(500, "Failed to verify User");
   }
 });
 

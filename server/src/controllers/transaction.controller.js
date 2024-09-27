@@ -43,6 +43,7 @@ const transferFunds = asyncHandler(async (req, res) => {
     const newTransaction = new Transaction({
       sender,
       receiver,
+      type: "transfer",
       amount: parsedAmount,
       reference: reference || "no reference",
       status: status || "pending",

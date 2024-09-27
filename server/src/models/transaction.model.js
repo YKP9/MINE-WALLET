@@ -14,7 +14,7 @@ const transactionSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: function (v) {
-          return v !== this.receiver;
+          return this.type !== 'deposit' ? v !== this.receiver : true;
         },
         message: "Sender and Receiver cannot be same person",
       }
@@ -25,10 +25,16 @@ const transactionSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: function (v) {
-          return v !== this.sender;
+          return this.type !== 'deposit' ? v !== this.sender : true;
         },
         message: "Receiver and Sender cannot be same person",
       }
+    },
+
+    type: {
+      type: String,
+      required: true, 
+      enum: ["deposit", "withdrawal", "transfer"],
     },
 
     reference: {

@@ -95,6 +95,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
+      
     },
     identificationType: {
       type: String,

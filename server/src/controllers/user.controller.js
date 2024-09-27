@@ -52,6 +52,19 @@ const registerUser = asyncHandler(async (req, res) => {
     ) {
       throw new ApiError(400, "All Fields are required");
     }
+
+    // Validate identification number based on the type
+    if (identificationType === "Aadhar") {
+      if (!/^\d{12}$/.test(identificationNumber)) {
+        throw new ApiError(400, "Aadhar number must be a 12-digit number");
+      }
+    } else if (identificationType === "PAN") {
+      if (!/^[A-Z]{5}\d{4}[A-Z]{1}$/.test(identificationNumber)) {
+        throw new ApiError(400, "PAN number must be an alphanumeric string of 10 characters");
+      }
+    } else {
+      throw new ApiError(400, "Invalid identification type");
+    }
   
     const existedUser = await User.findOne({ $or: [{ userName }, { email }] });
   
