@@ -118,6 +118,7 @@ const updateRequest = asyncHandler(async (req, res) => {
         amount: parsedAmount,
         reference: "Request accepted",
         status: "success",
+        type: "transfer",
       });
 
       // Log the new transaction data

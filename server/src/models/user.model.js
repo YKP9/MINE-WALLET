@@ -95,7 +95,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      
     },
     identificationType: {
       type: String,
@@ -114,9 +113,12 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       validate: {
         validator: function (v) {
-          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#_$&?!*])[A-Za-z\d@#_$&?!*]{8,16}$/.test(
-            v
-          );
+          if (this.isModified("password")) {
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#_$&?!*])[A-Za-z\d@#_$&?!*]{8,16}$/.test(
+              v
+            );
+          }
+          return true;
         },
         message: (props) => `${props.value} is not a valid password!`,
       },
