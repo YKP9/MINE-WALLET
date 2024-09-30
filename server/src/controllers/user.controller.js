@@ -265,10 +265,16 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
+  console.log("Received update request:", req.body); // Log incoming request body
   const {  userName, firstName, lastName, email, phoneNumber, address } = req.body;
 
   if ([firstName, lastName, userName, email, phoneNumber, address].some(field => !field || field.trim() === "")) {
     throw new ApiError(400, "All fields are required to update account details");
+  }
+
+   // Check if the user exists
+   if (!req.user?._id) {
+    throw new ApiError(401, "User not authenticated");
   }
   
 

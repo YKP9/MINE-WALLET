@@ -13,6 +13,8 @@ import { TransactionFailed } from "./pages/MessagePopup/Failed";
 import { RequestMoney } from "./pages/Request/requestFund";
 import { AdminVerification } from "./pages/Users/users";
 import { TransactionDashboard } from "./pages/Users/usersTransaction";
+import { UserProfile } from "./pages/Profile/userProfile";
+import { ProfileEditor } from "./pages/Profile/editProfile";
 
 import "./styleSheets/alignments.css";
 import "./styleSheets/custom-components.css";
@@ -99,6 +101,26 @@ function App() {
               <TransactionDashboard />
             </ProtectedRoute>
           }   />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute>
+                <ProfileEditor />
+              </ProtectedRoute>
+            }
+          />
+
+          
         </Routes>
       </BrowserRouter>
     </div>
