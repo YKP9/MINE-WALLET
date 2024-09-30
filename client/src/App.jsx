@@ -15,6 +15,7 @@ import { AdminVerification } from "./pages/Users/users";
 import { TransactionDashboard } from "./pages/Users/usersTransaction";
 import { UserProfile } from "./pages/Profile/userProfile";
 import { ProfileEditor } from "./pages/Profile/editProfile";
+import { ModifyPassword } from "./pages/PasswordChange/userPasswordChange";
 
 import "./styleSheets/alignments.css";
 import "./styleSheets/custom-components.css";
@@ -116,6 +117,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProfileEditor />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <ModifyPassword />
               </ProtectedRoute>
             }
           />

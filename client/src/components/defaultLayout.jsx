@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { DownOutlined, ProfileOutlined, LockOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
 
 export function AppLayout(props) {
   const { user } = useSelector((state) => state.users);
@@ -87,6 +89,19 @@ export function AppLayout(props) {
     },
   ];
 
+  const items = [
+    {
+      key: "1",
+      label: <Link to="/profile">Profile</Link>,
+      icon: <ProfileOutlined />,
+    },
+    {
+      key: "2",
+      label: <Link to="/change-password">Change Password</Link>,
+      icon: <LockOutlined />,
+    },
+  ];
+
   const menuToRender = user?.isAdmin ? adminMenu : userMenu;
 
   return (
@@ -132,10 +147,14 @@ export function AppLayout(props) {
           </div>
 
           <div>
-            <h1 className="text-sm underline text-secondary">
-              {user.firstName} {user.lastName}
-              {/* {user.userName} */}
-            </h1>
+            <Dropdown menu={{ items }}>
+              <Space>
+                <h1 className="text-sm underline text-secondary">
+                  {user.firstName} {user.lastName}
+                  <DownOutlined className="text-secondary ms-1" />
+                </h1>
+              </Space>
+            </Dropdown>
           </div>
         </div>
         <div className="content">{props.children}</div>

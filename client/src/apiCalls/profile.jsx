@@ -14,4 +14,16 @@ const EditProfile = async (payload) => {
     }
 };
 
-export { EditProfile }
+const ChangePassword = async (payload) => {
+    try {
+        const { data } = await axiosInstance.put(
+            "/api/v1/users/change-current-password",
+            payload
+        );
+        return data;
+    } catch (error) {
+        return error.response.data;
+    }
+};
+
+export { EditProfile, ChangePassword }
