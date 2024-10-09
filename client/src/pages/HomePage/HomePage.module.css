@@ -1,0 +1,32 @@
+/* NAVBAR */
+
+.navbar{
+    border: 2px solid black;
+
+}
+.navLinks{
+margin-right: 50px;
+}
+
+/* HERO */
+
+.heroImg img{
+width: 80%;
+height: 80vh;
+
+}
+
+.heroSection{
+position: relative;
+border: 2px solid black;
+}
+
+.heroContent{
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to center */
+    color: white; /* Text color for visibility */
+    text-align: center; /* Center text */
+
+}

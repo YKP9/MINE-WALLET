@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { HomePage } from "./pages/HomePage/HomePage";
 import { Register } from "./pages/Register/register";
 import { Login } from "./pages/Login/login";
 import { Home } from "./pages/Home/home";
@@ -33,6 +34,7 @@ function App() {
       {loading && <Loader />}
       <BrowserRouter>
         <Routes>
+          < Route path="/home" element={<PublicRoute><HomePage /></PublicRoute>} />
           <Route
             path="/login"
             element={
