@@ -4,6 +4,7 @@ import { LoginUser } from "../../apiCalls/users";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
+import styles from "./login.module.css";
 
 export function Login() {
   const navigate = useNavigate();
@@ -12,56 +13,73 @@ export function Login() {
 
   const onFinish = async (values) => {
     try {
-
-      dispatch(ShowLoading())
+      dispatch(ShowLoading());
       const response = await LoginUser(values);
-      dispatch(HideLoading())
+      dispatch(HideLoading());
 
       if (response.success) {
         message.success(response.message);
         setCookie("token", response.data.accessToken, { path: "/" });
-        
-        
+
         navigate("/");
       } else {
         message.error(response.message);
       }
     } catch (error) {
-      dispatch(HideLoading())
+      dispatch(HideLoading());
       const errorMessage = error.response?.data?.message || error.message;
       message.error(errorMessage);
     }
   };
 
   return (
-    <div className="montserrat bg-primary flex justify-center item-center h-screen">
-      <div className="card w-400 p-2">
-        <Form layout="vertical" onFinish={onFinish}>
-          <h1 className="text-2xl text-center"> MINEWALLET - LOGIN </h1>
+    <div className={`montserrat ${styles.loginBg} h-screen `}>
+      <header className={`text-3xl text-white ${styles.header}`}>
+        MINEWALLET
+      </header>
+     
 
-          <hr />
+      <div className="flex justify-end item-center h-100 gap-5   ">
+      <div className={`text-white text-2xl flex flex-col gap-1 ${styles.quote}`}>
+        <div>
+          ”Do not save what is left after spending, but spend what is left after
+          saving.”
+        </div>
+        <div className="text-end">– Warren Buffett.</div>
+      </div>
+        <div className={`card w-400 p-2 me-1 ${styles.loginForm}`}>
+          <Form layout="vertical" onFinish={onFinish}>
+            <h1 className="text-2xl text-center"> MINEWALLET - LOGIN </h1>
 
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item label="Email" name="email">
-                <input type="email" />
-              </Form.Item>
-            </Col>
+            <hr />
 
-            <Col span={24}>
-              <Form.Item label="Password" name="password">
-                <input type="password" />
-              </Form.Item>
-            </Col>
-          </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item label="Email" name="email">
+                  <input type="email" />
+                </Form.Item>
+              </Col>
 
-          <button className="primary-contained-btn w-100" type="submit">
-            Login
-          </button>
-          <Link to={"/register"}>
-            <div className="text-sm underline text-center mt-2">REGISTER </div>
-          </Link>
-        </Form>
+              <Col span={24}>
+                <Form.Item label="Password" name="password">
+                  <input type="password" />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <button
+              className={`primary-contained-btn w-100 ${styles.loginBtn}`}
+              type="submit"
+            >
+              Login
+            </button>
+            <Link to={"/register"}>
+              <div className="text-sm underline text-center mt-2">
+                REGISTER{" "}
+              </div>
+            </Link>
+          </Form>
+        </div>
       </div>
     </div>
   );

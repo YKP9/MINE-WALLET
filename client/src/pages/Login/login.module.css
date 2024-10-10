@@ -1,0 +1,18 @@
+.loginBg {
+   background-image: url("../../assets/login.png"); 
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+.loginForm{
+    border-radius: 20px;
+}
+.loginBtn{
+    border-radius: 50px;
+}
+.quote{
+    width: 50%;
+}
+
+.header{
+position: absolute;
+}

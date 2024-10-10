@@ -24,12 +24,12 @@ export function ProtectedRoute(props) {
         dispatch(SetUser(response.data));
       } else {
         message.error(error.message);
-        navigate("/login");
+        navigate("/home");
       }
     } catch (error) {
       dispatch(HideLoading());
       message.error(error.message);
-      navigate("/login");
+      navigate("/home");
     }
   };
 
@@ -37,7 +37,7 @@ export function ProtectedRoute(props) {
     if (cookies.token) {
       getData();
     } else {
-      navigate("/login");
+      navigate("/home");
     }
   }, [cookies.token]);
 

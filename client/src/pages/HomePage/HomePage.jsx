@@ -22,6 +22,7 @@ export function HomePage() {
               {" "}
               Login{" "}
             </Link>
+            <Link to="#contact" className={`${styles.navLink} primary-outlined-btn text-decoration-none `}>Contact-Us</Link>
           </div>
         </nav>
       </header>
@@ -127,10 +128,10 @@ export function HomePage() {
         </section>
         
       </main>
-      <footer className={ `${styles.footer} border h-25 flex justify-between p-4 text-lg`}>
+      <footer className={ `${styles.footer} border h-25 flex justify-between p-4 text-lg`} id="contact">
         <div>Copyright @ 2024 MINEWALLET All rights reserved.</div>
         <div><img src="" alt="LogoImg" /></div>
-        <div>
+        <div >
           <div className="text-3xl">Contact-Us</div>
           <div className="mt-2">1800 9999 9999</div>
           <div className="mt-1">mw9@gmail.com</div>
