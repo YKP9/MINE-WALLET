@@ -1,32 +1,81 @@
 /* NAVBAR */
 
-.navbar{
-    border: 2px solid black;
 
-}
-.navLinks{
-margin-right: 50px;
+.navLinks {
+  margin-right: 50px;
 }
 
 /* HERO */
 
-.heroImg img{
-width: 80%;
-height: 80vh;
-
+.heroImg img {
+  width: 80%;
+  height: 80vh;
 }
 
-.heroSection{
-position: relative;
-border: 2px solid black;
+.heroSection {
+  position: relative;
+  /* border: 2px solid black; */
+  height: 100vh;
 }
 
-.heroContent{
+
+
+.heroText {
+    
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust position to center */
-    color: white; /* Text color for visibility */
-    text-align: center; /* Center text */
-
+    top: 20%;
+    left: 10%;
+    padding: 40px;
+    /* color: var(--secondary); */
+    color: white;
 }
+
+/* BENIFITS CONTAINER */
+
+.benifitsContainer{
+    
+     color: var(--primary); 
+     
+}
+
+.benifitsText{
+
+width: 80%;
+margin: auto;
+color: var(--primary);
+}
+.benifitsContent{
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 80%;
+    margin-bottom: 70px;
+}
+.benifitCard{
+    
+    height: 200px;
+    width: 300px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.benifitBA{
+    height: 100%;
+    background-color: #e7e1e8 ;   
+}
+
+
+/* FOOTER */
+
+.footer{
+    background-color: black ;
+    color: white;
+}
+
+
+/* 01592c */

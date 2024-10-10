@@ -13,6 +13,13 @@
 .bg-secondary{
     background-color: var(--secondary) !important;
 }
+.bg-tertiary {
+    background-color: var(--tertiary) !important;
+  }
+  .bg-quarternary {
+    background-color: #e7e1e8;
+  }
+
 
 .text-primary{
     color: var(--primary) !important;
@@ -40,6 +47,3 @@
     padding: 10px;
     border-radius: 3px;
 }
-.bg-tertiary {
-    background-color: var(--tertiary) !important;
-  }

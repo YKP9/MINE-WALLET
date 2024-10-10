@@ -1,5 +1,8 @@
 
 /* Text Sizes */
+.text-3xl{
+    font-size: 2.5rem !important;
+}
 
 .text-2xl{
     font-size: 1.6rem !important;
@@ -15,6 +18,10 @@
 }
 .text-sm{
     font-size: 0.875rem !important;
+}
+
+.bold{
+    font-weight: bold;
 }
 
 /* Text Alignments */
