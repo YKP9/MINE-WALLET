@@ -1,14 +1,21 @@
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import homeImg from "../../assets/home.png";
+import { useRef } from "react";
+import logo from "../../assets/MINEWALLET.png"
 
 export function HomePage() {
+  const footerRef = useRef(null);
+
+  const handleScrollToFooter = () => {
+    footerRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <div>
-      <header>
-        <nav className={`${styles.navbar} flex justify-between p-2 `}>
-          <div>MiNEWALLET</div>
-          <div className={`${styles.navLinks} flex gap-2 `}>
+      <header className={`mb-5 ${styles.header}`}>
+        <nav className={`${styles.navbar} flex justify-between  `}>
+          <div className="flex items-center"><img src={logo} alt="MINEWALLET_LOGO" style={{ width: "200px" }} /></div>
+          <div className={`${styles.navLinks} `}>
             <Link
               to="/register"
               className={`${styles.navLink} primary-outlined-btn text-decoration-none `}
@@ -22,7 +29,7 @@ export function HomePage() {
               {" "}
               Login{" "}
             </Link>
-            <Link to="#contact" className={`${styles.navLink} primary-outlined-btn text-decoration-none `}>Contact-Us</Link>
+            <button onClick={handleScrollToFooter} className={`${styles.navLink} primary-outlined-btn text-decoration-none `}>Contact-Us</button>
           </div>
         </nav>
       </header>
@@ -128,9 +135,9 @@ export function HomePage() {
         </section>
         
       </main>
-      <footer className={ `${styles.footer} border h-25 flex justify-between p-4 text-lg`} id="contact">
+      <footer ref={footerRef} className={ `${styles.footer} border h-25 flex justify-between p-4 text-lg`}>
         <div>Copyright @ 2024 MINEWALLET All rights reserved.</div>
-        <div><img src="" alt="LogoImg" /></div>
+        <div><img src={logo} style={{width:"150px",height:"150px"}} alt="LogoImg" /></div>
         <div >
           <div className="text-3xl">Contact-Us</div>
           <div className="mt-2">1800 9999 9999</div>

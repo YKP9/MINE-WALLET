@@ -1,8 +1,18 @@
 /* NAVBAR */
 
+.header{
+  background-color: #fafcf2;
 
+}
 .navLinks {
   margin-right: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 10%;
+  left: 40%;
 }
 
 /* HERO */
@@ -79,3 +89,5 @@ color: var(--primary);
 
 
 /* 01592c */
+
+
