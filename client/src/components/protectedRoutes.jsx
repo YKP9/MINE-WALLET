@@ -14,28 +14,54 @@ export function ProtectedRoute(props) {
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
+  // const getData = async () => {
+  //   try {
+  //     dispatch(ShowLoading());
+  //     const response = await GetUserInfo();
+  //     dispatch(HideLoading());
+
+  //     if (response.success) {
+  //       dispatch(SetUser(response.data));
+  //     } else {
+  //       message.error(error.message);
+  //       navigate("/home");
+  //     }
+  //   } catch (error) {
+  //     dispatch(HideLoading());
+  //     message.error(error.message);
+  //     navigate("/home");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (cookies.token) {
+  //     getData();
+  //   } else {
+  //     navigate("/home");
+  //   }
+  // }, [cookies.token]);
+
   const getData = async () => {
-    try {
-      dispatch(ShowLoading());
-      const response = await GetUserInfo();
-      dispatch(HideLoading());
-
-      if (response.success) {
-        dispatch(SetUser(response.data));
-      } else {
-        message.error(error.message);
-        navigate("/home");
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      message.error(error.message);
-      navigate("/home");
-    }
+    dispatch(ShowLoading());
+    const response = await GetUserInfo();
+    dispatch(HideLoading());
+    return response;  // Return response for useEffect to handle
   };
-
+  
   useEffect(() => {
     if (cookies.token) {
-      getData();
+      getData()
+        .then((response) => {
+          if (response.success) {
+            dispatch(SetUser(response.data));
+          } else {
+            throw new Error(response.message);
+          }
+        })
+        .catch((error) => {
+          message.error(error.message);
+          navigate("/home");
+        });
     } else {
       navigate("/home");
     }

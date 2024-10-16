@@ -5,9 +5,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 const LoginUser = async (payload) => {
   try {
     const { data } = await axiosInstance.post(`${API_URL}/api/v1/users/login`, payload);
-    return data;
+    return { success: true, data};
   } catch (error) {
-    return error.response.data;
+    return { success: false, message: error.response?.data.message || "Something went wrong" };
   }
 };
 
