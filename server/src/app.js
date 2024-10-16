@@ -4,15 +4,18 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors({
-    origin : ['http://minewallet.netlify.app'],
+app.use(
+  cors({
+    origin: ["https://minewallet.netlify.app"],
     credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
-}))
+app.use(express.json({ limit: "16kb" }));
 
-app.use(express.json({ limit : "16kb" }));
-
-app.use(express.urlencoded({ extended : true, limit : "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 app.use(express.static("public"));
 
@@ -25,14 +28,12 @@ import transactionRouter from "./routes/transaction.routes.js";
 import requestRouter from "./routes/request.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 
-
 // Declare Routes
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/transactions", transactionRouter);
 app.use("/api/v1/requests", requestRouter);
 app.use("/api/v1/admin", adminRouter);
 
-app.use(errorHandler)
+app.use(errorHandler);
 
-
-export {app} 
+export { app };
