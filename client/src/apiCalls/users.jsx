@@ -1,10 +1,10 @@
 import { axiosInstance } from ".";
-
+const API_URL = import.meta.env.VITE_API_URL;
 // Login User
 
 const LoginUser = async (payload) => {
   try {
-    const { data } = await axiosInstance.post("/api/v1/users/login", payload);
+    const { data } = await axiosInstance.post(`${API_URL}/api/v1/users/login`, payload);
     return data;
   } catch (error) {
     return error.response.data;
@@ -15,7 +15,7 @@ const LoginUser = async (payload) => {
 
 const RegisterUser = async (payload) => {
   try {
-    const user = await axiosInstance.post("/api/v1/users/register", payload);
+    const user = await axiosInstance.post(`${API_URL}/api/v1/users/register`, payload);
     return user.data;
   } catch (error) {
     return error.response.data;
@@ -26,7 +26,7 @@ const RegisterUser = async (payload) => {
 
 const GetUserInfo = async () => {
   try {
-    const { data } = await axiosInstance.post("/api/v1/users/current-user");
+    const { data } = await axiosInstance.post(`${API_URL}/api/v1/users/current-user`);
     return data;
   } catch (error) {
     return error.response.data;

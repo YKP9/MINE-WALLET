@@ -1,11 +1,12 @@
 import { axiosInstance } from ".";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Verify Receiver Account
 
 export const verifyReceiverAccount = async (payload) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/transactions/verify-receiver",
+      `${API_URL}/api/v1/transactions/verify-receiver`,
       payload
     );
     return data;
@@ -19,7 +20,7 @@ export const verifyReceiverAccount = async (payload) => {
 export const TransferFunds = async (payload) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/transactions/transfer-funds",
+      `${API_URL}/api/v1/transactions/transfer-funds`,
       payload
     );
     return data;
@@ -33,7 +34,7 @@ export const TransferFunds = async (payload) => {
 export const GetTransactionsOfUser = async () => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/transactions/get-transactions"
+      `${API_URL}/api/v1/transactions/get-transactions`
     );
     return data;
   } catch (error) {
@@ -47,7 +48,7 @@ export const GetTransactionsOfUser = async () => {
 export const checkoutSession = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "/api/v1/transactions/create-checkout-session",
+      `${API_URL}/api/v1/transactions/create-checkout-session`,
       payload
     );
     return response; 
@@ -62,7 +63,7 @@ export const checkoutSession = async (payload) => {
 export const DepositFunds = async (payload) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/transactions/deposit-funds",
+      `${API_URL}/api/v1/transactions/deposit-funds`,
       payload
     );
     return data;
