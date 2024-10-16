@@ -1,8 +1,9 @@
 import styles from "./HomePage.module.css";
+import "./mq.css";
 import { Link } from "react-router-dom";
 import homeImg from "../../assets/home.png";
 import { useRef } from "react";
-import logo from "../../assets/MINEWALLET.png"
+import logo from "../../assets/MINEWALLET.png";
 
 export function HomePage() {
   const footerRef = useRef(null);
@@ -14,7 +15,9 @@ export function HomePage() {
     <div>
       <header className={`mb-5 ${styles.header}`}>
         <nav className={`${styles.navbar} flex justify-between  `}>
-          <div className="flex items-center"><img src={logo} alt="MINEWALLET_LOGO" style={{ width: "200px" }} /></div>
+          <div className="flex items-center">
+            <img src={logo} alt="MINEWALLET_LOGO" style={{ width: "200px" }} />
+          </div>
           <div className={`${styles.navLinks} `}>
             <Link
               to="/register"
@@ -29,16 +32,22 @@ export function HomePage() {
               {" "}
               Login{" "}
             </Link>
-            <button onClick={handleScrollToFooter} className={`${styles.navLink} primary-outlined-btn text-decoration-none `}>Contact-Us</button>
+            <button
+              onClick={handleScrollToFooter}
+              className={`${styles.navLink} primary-outlined-btn text-decoration-none `}
+            >
+              Contact-Us
+            </button>
           </div>
         </nav>
       </header>
-      <main>
+
+      <main >
         <section className={`${styles.heroSection} `}>
           <div className={`${styles.heroImg} flex justify-center`}>
             <img src={homeImg} alt="Hero-img" />
           </div>
-          <div className={`${styles.heroContent}}`}>
+          <div className={`${styles.heroContent}`}>
             <div className={`${styles.heroText} w-50 `}>
               <h1 className="text-3xl">Welcome to MINEWALLET</h1>
               <div>
@@ -56,7 +65,7 @@ export function HomePage() {
           </div>
         </section>
 
-        <section className={`${styles.benifitsContainer} h-screen  `}>
+        <section className={`${styles.benifitsContainer} h-100 mb-5  `}>
           <div
             className={`${styles.benifitsText} text-center mt-5 text-3xl bold `}
           >
@@ -120,24 +129,26 @@ export function HomePage() {
               </p>
             </div>
           </div>
-          <div className={`${styles.benifitBA}  w-80 m-auto flex justify-center item-center h-30 flex-col `}>
-            <div className="text-2xl">
-              Boost your business by adding MINEWALLET to your checkout today
-            </div>
-            <div className={`${styles.BA} mt-5`}>
-              <Link to="/register" className="text-decoration-none primary-outlined-btn bg-quarternary">Get a Business Account</Link>
-            </div>
-          </div>
-          
-
-          
-          
         </section>
-        
+
+        <section
+          className={`${styles.benifitBA}  w-80 m-auto flex justify-center item-center h-25 mt-1 flex-col  `}>
+          <div className="text-2xl">
+            Boost your business by adding MINEWALLET to your checkout today
+          </div>
+          <div className={`${styles.BA} mt-5`}>
+            <Link
+              to="/register"
+              className="text-decoration-none primary-outlined-btn bg-quarternary"
+            >
+              Get a Business Account
+            </Link>
+          </div>
+        </section>
       </main>
-      <footer ref={footerRef} className={ `${styles.footer} border h-25 flex justify-between p-4 text-lg`}>
-        <div>Copyright @ 2024 MINEWALLET All rights reserved.</div>
-        <div><img src={logo} style={{width:"150px",height:"150px"}} alt="LogoImg" /></div>
+      <footer ref={footerRef} className={ `${styles.footer}  h-25 flex justify-between p-4 text-lg mt-5`}>
+        <div className="w-25">Copyright @ 2024 MINEWALLET All rights reserved.</div>
+        <div><img src={logo} className={styles.logo} alt="LogoImg" /></div>
         <div >
           <div className="text-3xl">Contact-Us</div>
           <div className="mt-2">1800 9999 9999</div>

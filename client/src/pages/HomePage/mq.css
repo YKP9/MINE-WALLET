@@ -1,0 +1,123 @@
+/* Small devices (phones, less than 600px) */
+@media (max-width: 600px) {
+    /* Header adjustments */
+    .header {
+      padding: 10px;
+    }
+  
+    /* Navbar adjustments */
+    .navLinks {
+      gap: 10px;
+      font-size: 14px;
+    }
+  
+    /* Hero section */
+    .heroSection {
+      height: 50vh;
+    }
+  
+    .heroText {
+      font-size: 18px;
+      padding: 10px;
+      text-align: center;
+    }
+  
+    .heroImg img {
+      width: 100%;
+      height: auto;
+    }
+  
+    /* Benefits section */
+    .benifitCard {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    /* Footer adjustments */
+    .footer {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+    }
+  
+    .footer img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  
+  /* Small devices (tablets, 768px and up) */
+  @media (max-width: 768px) {
+    /* Navbar adjustments */
+    .navLinks {
+      position: static;
+      margin: 20px 0;
+      flex-direction: column;
+    }
+  
+    /* Hero section */
+    .heroText {
+      padding: 20px;
+      text-align: center;
+    }
+  
+    .heroSection {
+      height: 70vh;
+    }
+  
+    /* Benefits section */
+    .benifitCard {
+      width: 80%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  
+    /* Footer */
+    .footer {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  /* Medium devices (desktops, 992px and up) */
+  @media (max-width: 992px) {
+    /* Navbar */
+    .navLinks {
+      margin-right: 20px;
+    }
+  
+    /* Hero section */
+    .heroSection {
+      height: 60vh;
+    }
+  
+    .heroImg img {
+      width: 75%;
+    }
+  
+    .benifitsContainer {
+      width: 90%;
+    }
+  
+    .benifitBA {
+      padding: 20px;
+      text-align: center;
+    }
+  }
+  
+  /* Large devices (desktops, 1200px and up) */
+  @media (min-width: 1200px) {
+    .benifitCard {
+      width: 250px;
+    }
+  
+    .heroText {
+      width: 40%;
+    }
+  
+    .footer {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  

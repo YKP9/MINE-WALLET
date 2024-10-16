@@ -170,29 +170,6 @@ width: 80%;
 .p-4{
     padding: 40px;
 }
-.border{
-    border: 2px solid black;
-}
-.bordered {
-    position: relative; /* Position relative for the pseudo-element */
-    padding-top: 10px; /* Adjust padding to create space for the border */
-}
 
-.bordered::before {
-    content: ''; /* Pseudo-element must have content */
-    position: absolute; /* Position it absolutely */
-    top: 0; /* Align to the top */
-    left: 0; /* Start from the left */
-    width: 100%; /* Full width */
-    height: 3px; /* Height of the border */
-    background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0) 35%,  /* Transparent color on the left */
-        #f8b944 35%,            /* Your color starts at 30% */
-        #f8b944 65%,            /* Your color continues to 70% */
-        rgba(0, 0, 0, 0) 65%    /* Transparent color on the right */
-    );
-  
-}
 
 
