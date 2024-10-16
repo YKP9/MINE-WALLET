@@ -26,13 +26,36 @@
 //   return Promise.reject(error);
 // });
 
+// import axios from 'axios';
+
+// export const axiosInstance = axios.create({
+//   baseURL: import.meta.env.VITE_API_URL, // Base URL from environment variables
+//   withCredentials: true, // Allows sending cookies across domains
+//   headers: {
+//     Authorization: `Bearer ${localStorage.getItem('token')}`, // Set the Authorization header with the token
+//   },
+// });
+
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Base URL from environment variables
   withCredentials: true, // Allows sending cookies across domains
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`, // Set the Authorization header with the token
-  },
 });
+
+// Interceptor to set Authorization header dynamically
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization; // Remove the header if no token is available
+  }
+  
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 
