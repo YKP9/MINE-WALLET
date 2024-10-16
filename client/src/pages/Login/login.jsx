@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import styles from "./login.module.css";
+import  logo  from "../../assets/MINEWALLET.png";
 
 export function Login() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export function Login() {
   return (
     <div className={`montserrat ${styles.loginBg} h-screen `}>
       <header className={`text-3xl text-white ${styles.header}`}>
-        MINEWALLET
+        <img src={logo} style={{ width: "100px" }}  alt="MINEWALLET_LOGO" />
       </header>
      
 
