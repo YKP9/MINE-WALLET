@@ -36,8 +36,11 @@ export const axiosInstance = axios.create({
 // Interceptor to set the Authorization header for each request
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
+  console.log('Retrieved token:', token); // Log the token
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`; // Update header with the latest token
+  }else{
+    console.warn('No token found in localStorage');
   }
   return config;
 }, (error) => {
