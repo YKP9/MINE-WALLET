@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SetUser } from "../redux/usersSlice";
 import { HideLoading, ShowLoading } from "../redux/loadersSlice";
-import { AppLayout } from "./DefaultLayout";
+import { AppLayout } from "./defaultLayout";
 
 export function ProtectedRoute(props) {
   const [cookies] = useCookies(["token"]);
