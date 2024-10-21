@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-    baseURL : 'https://mine-wallet-backend.onrender.com',
+    baseURL : import.meta.env.VITE_API_URL,
     withCredentials : true,
     headers : {
         "Authorization" : `Bearer ${localStorage.getItem('token')}`

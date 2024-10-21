@@ -3,12 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    proxy: {
-      '/api': {
-        target : 'https://mine-wallet-backend.onrender.com',
-        changeOrigin : true,
-      },
+  define: {
+    'process.env': {
+      VITE_API_URL : 'https://mine-wallet-backend.onrender.com'
     },
   },
   plugins: [react()],
