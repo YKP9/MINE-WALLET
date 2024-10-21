@@ -1,11 +1,12 @@
 import { axiosInstance } from ".";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Get All Requests For a User
 
 export const GetAllRequests = async () => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/requests/get-all-requests"
+      `${API_URL}/api/v1/requests/get-all-requests`
     );
     return data;
   } catch (error) {
@@ -20,7 +21,7 @@ export const GetAllRequests = async () => {
 export const SendRequest = async (requests) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/requests/send-request",
+      `${API_URL}/api/v1/requests/send-request`,
       requests
     );
     return data;
@@ -36,7 +37,7 @@ export const SendRequest = async (requests) => {
 export const UpdateRequestStatus = async (requests) => {
   try {
     const { data } = await axiosInstance.post(
-      "/api/v1/requests/update-request-status",
+      `${API_URL}/api/v1/requests/update-request-status`,
       requests
    );
     return data;
