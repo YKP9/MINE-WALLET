@@ -12,6 +12,8 @@
    
    
 // })
+
+import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 // Create an Axios instance
