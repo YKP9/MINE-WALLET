@@ -218,7 +218,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: true || process.env.NODE_ENV === "production",
     };
 
     const { accessToken, newRefreshToken } =
