@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export function PublicRoute(props) {
-    const[cookies] = useCookies(["token"])
+    const[cookies] = useCookies(["accessToken"])
     const navigate = useNavigate()
 
     useEffect(()=>{
-        if(cookies.token){
+        if(cookies.accessToken){
             navigate("/")
         }
-    },[cookies.token])
+    },[cookies.accessToken])
   return (
     <div>
       {props.children}

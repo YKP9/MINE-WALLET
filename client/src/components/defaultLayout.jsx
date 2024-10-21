@@ -9,7 +9,7 @@ export function AppLayout(props) {
   const { user } = useSelector((state) => state.users);
   const [collapse, setCollapse] = useState(false);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
 
   const userMenu = [
     {
@@ -40,7 +40,7 @@ export function AppLayout(props) {
       title: "LogOut",
       icon: <span className="ri-logout-circle-r-line icons"></span>,
       onClick: () => {
-        removeCookie("token");
+        removeCookie("accessToken");
         navigate("/login");
       },
       path: "/logout",
@@ -82,7 +82,7 @@ export function AppLayout(props) {
       title: "LogOut",
       icon: <span className="ri-logout-circle-r-line icons"></span>,
       onClick: () => {
-        removeCookie("token");
+        removeCookie("accessToken");
         navigate("/login");
       },
       path: "/logout",

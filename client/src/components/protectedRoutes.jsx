@@ -9,7 +9,7 @@ import { HideLoading, ShowLoading } from "../redux/loadersSlice";
 import { AppLayout } from "./defaultLayout";
 
 export function ProtectedRoute(props) {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["accessToken"]);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
@@ -34,12 +34,12 @@ export function ProtectedRoute(props) {
   };
 
   useEffect(() => {
-    if (cookies.token) {
+    if (cookies.accessToken) {
       getData();
     } else {
       navigate("/home");
     }
-  }, [cookies.token]);
+  }, [cookies.accessToken]);
 
   return (
     user && (
