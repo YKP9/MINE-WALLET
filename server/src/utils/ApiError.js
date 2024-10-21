@@ -2,7 +2,7 @@
 class ApiError extends Error {
     constructor(
         statusCode,
-        message = "SOMETHING WENT WRONG",
+        message = "SOMETHING WENT WRONG!!!",
         errors = [],
         stack = ""
     ){
