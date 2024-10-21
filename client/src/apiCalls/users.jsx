@@ -4,10 +4,13 @@ import { axiosInstance } from ".";
 
 const LoginUser = async (payload) => {
   try {
-    const { data } = await axiosInstance.post("/api/v1/users/login", payload);
-    return data;
+    const response = await axiosInstance.post("/api/v1/users/login", payload);
+    console.log("Login response:", response)
+    return response.data;
   } catch (error) {
-    return error.response.data;
+    return error.response.data || {
+      success: false,
+      message: "Network error",} ;
   }
 };
 
