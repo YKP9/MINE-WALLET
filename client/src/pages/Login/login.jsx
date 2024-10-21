@@ -20,9 +20,9 @@ export function Login() {
 
       if (response.success) {
         message.success(response.message);
-        setCookie("accessToken", response.data.accessToken, { path: "/home" });
+        setCookie("accessToken", response.data.accessToken, { path: "/" });
 
-        navigate("/home");
+        navigate("/");
       } else {
         message.error(response.message);
       }
