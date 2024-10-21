@@ -28,7 +28,8 @@ export function Login() {
       }
     } catch (error) {
       dispatch(HideLoading());
-      const errorMessage = error.response?.data?.message || error.message;
+      console.error("Login error:", error); // Log the entire error object
+      const errorMessage = error.response?.data?.message || error.message || "UNKNOWN ERROR";
       message.error(errorMessage);
     }
   };
