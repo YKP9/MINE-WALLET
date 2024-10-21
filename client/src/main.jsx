@@ -13,7 +13,9 @@ import 'remixicon/fonts/remixicon.css'
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <CookiesProvider>
+      <StyleProvider>
       <App />
+      </StyleProvider>
     </CookiesProvider>
   </Provider>
 );

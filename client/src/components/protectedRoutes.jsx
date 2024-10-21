@@ -19,7 +19,7 @@ export function ProtectedRoute(props) {
       dispatch(ShowLoading());
       const response = await GetUserInfo();
       dispatch(HideLoading());
-
+      console.log("User info response:", response); // Debugging line
       if (response.success) {
         dispatch(SetUser(response.data));
       } else {
@@ -37,6 +37,7 @@ export function ProtectedRoute(props) {
     if (cookies.accessToken) {
       getData();
     } else {
+      console.log("No access token found, redirecting to home...");
       navigate("/home");
     }
   }, [cookies.accessToken]);

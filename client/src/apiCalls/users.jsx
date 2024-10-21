@@ -27,6 +27,7 @@ const RegisterUser = async (payload) => {
 const GetUserInfo = async () => {
   try {
     const { data } = await axiosInstance.post("/api/v1/users/current-user");
+    console.log(data);
     return data;
   } catch (error) {
     return error.response.data;
