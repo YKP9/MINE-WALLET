@@ -6,10 +6,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://minewallet.netlify.app"],
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
+   
   })
 );
 
