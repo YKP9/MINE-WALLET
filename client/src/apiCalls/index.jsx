@@ -15,7 +15,7 @@
 import { useCookies } from 'react-cookie';
 
 // Create an Axios instance
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
     baseURL: 'https://mine-wallet-backend.onrender.com',
     withCredentials: true,
 });
@@ -31,4 +31,4 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-export default axiosInstance;
+;
